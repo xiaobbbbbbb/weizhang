@@ -1,0 +1,241 @@
+package com.ecarinfo.traffic.persist.tables;
+import com.ecarinfo.db4j.table.AllField;
+import com.ecarinfo.db4j.table.AbstractTable;
+import com.ecarinfo.db4j.table.TableField;
+import com.ecarinfo.db4j.table.TableFieldImpl;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Date;
+import com.ecarinfo.db4j.table.DateTableField;
+import com.ecarinfo.db4j.table.DateTableFieldImpl;
+
+public class TOrgInfo extends AbstractTable {
+
+	static {
+		init();
+	}
+
+	private TOrgInfo(){
+		super.tableName = "org_info";
+	}
+
+	private TOrgInfo(String aliasName){
+		this();
+		setAliasName(aliasName);
+	}
+
+	public static final TOrgInfo getInstance() {
+		return new TOrgInfo();
+	}
+
+	public static final TOrgInfo getInstance(String aliasName) {
+		return new TOrgInfo(aliasName);
+	}
+
+	private static Map<String, String> allFieldMap;// = new HashMap<String, String>();
+	private static final void init() {
+		allFieldMap = new HashMap<String, String>();
+		allFieldMap.put("id", "id");
+		allFieldMap.put("code", "code");
+		allFieldMap.put("name", "name");
+		allFieldMap.put("address", "address");
+		allFieldMap.put("contacts", "contacts");
+		allFieldMap.put("tel", "tel");
+		allFieldMap.put("appKey", "app_key");
+		allFieldMap.put("expiredTime", "expired_time");
+		allFieldMap.put("status", "status");
+		allFieldMap.put("joinTime", "join_time");
+		allFieldMap.put("queryType", "query_type");
+		allFieldMap.put("maxCarCounts", "max_car_counts");
+		allFieldMap.put("leftCarCounts", "left_car_counts");
+		allFieldMap.put("maxQueryCounts", "max_query_counts");
+		allFieldMap.put("leftQueryCounts", "left_query_counts");
+		allFieldMap.put("provinceId", "province_id");
+		allFieldMap.put("cityId", "city_id");
+		allFieldMap.put("salesman", "salesman");
+		allFieldMap.put("tackId", "tack_id");
+		allFieldMap.put("belongTo", "belong_to");
+		allFieldMap.put("carFrameLen", "car_frame_len");
+		allFieldMap.put("carEngineLen", "car_engine_len");
+		allFieldMap.put("ownerNameLen", "owner_name_len");
+		allFieldMap.put("carCertificateLen", "car_certificate_len");
+		allFieldMap.put("isDelete", "is_delete");
+		allFieldMap.put("updateTime", "update_time");
+		allFieldMap.put("createTime", "create_time");
+
+	}
+
+	@Override
+	public String getFieldName(String javaFieldName) {
+		return allFieldMap.get(javaFieldName);
+	}
+
+	public final TableField<Integer> all = new AllField<Integer>(this,  "*",null);
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public TableField allField() {
+		return all;
+	}
+
+	/**
+	 * | int(11)
+	*/
+	public final TableField<Integer>  pk = new TableFieldImpl<Integer>(this,"id","id","");
+	public final TableField<Integer> id = new TableFieldImpl<Integer>(this,"id","id","");
+
+	/**
+	 *机构代号(机构编码) | char(6)
+	*/
+	public final TableField<String> code = new TableFieldImpl<String>(this,"code","code","机构代号(机构编码)");
+
+	/**
+	 *名称 | char(30)
+	*/
+	public final TableField<String> name = new TableFieldImpl<String>(this,"name","name","名称");
+
+	/**
+	 *地址 | char(100)
+	*/
+	public final TableField<String> address = new TableFieldImpl<String>(this,"address","address","地址");
+
+	/**
+	 *联系人 | varchar(255)
+	*/
+	public final TableField<String> contacts = new TableFieldImpl<String>(this,"contacts","contacts","联系人");
+
+	/**
+	 *电话 | char(30)
+	*/
+	public final TableField<String> tel = new TableFieldImpl<String>(this,"tel","tel","电话");
+
+	/**
+	 *密钥 | char(64)
+	*/
+	public final TableField<String> appKey = new TableFieldImpl<String>(this,"app_key","appKey","密钥");
+
+	/**
+	 *到期时间 | datetime
+	*/
+	public final DateTableField<Date> expiredTime = new DateTableFieldImpl<Date>(this,"expired_time","expiredTime","到期时间");
+
+	/**
+	 *状态 | int(11)
+	*/
+	public final TableField<Integer> status = new TableFieldImpl<Integer>(this,"status","status","状态");
+
+	/**
+	 *加入时间 | datetime
+	*/
+	public final DateTableField<Date> joinTime = new DateTableFieldImpl<Date>(this,"join_time","joinTime","加入时间");
+
+	/**
+	 *查询类型(1:实时查询,2:指查询) | int(11)
+	*/
+	public final TableField<Integer> queryType = new TableFieldImpl<Integer>(this,"query_type","queryType","查询类型(1:实时查询,2:指查询)");
+
+	/**
+	 *授权车辆数 | int(11)
+	*/
+	public final TableField<Integer> maxCarCounts = new TableFieldImpl<Integer>(this,"max_car_counts","maxCarCounts","授权车辆数");
+
+	/**
+	 *剩余车辆数 | int(11)
+	*/
+	public final TableField<Integer> leftCarCounts = new TableFieldImpl<Integer>(this,"left_car_counts","leftCarCounts","剩余车辆数");
+
+	/**
+	 *最大查询次数 | int(11)
+	*/
+	public final TableField<Integer> maxQueryCounts = new TableFieldImpl<Integer>(this,"max_query_counts","maxQueryCounts","最大查询次数");
+
+	/**
+	 *剩余查询次数 | int(11)
+	*/
+	public final TableField<Integer> leftQueryCounts = new TableFieldImpl<Integer>(this,"left_query_counts","leftQueryCounts","剩余查询次数");
+
+	/**
+	 *省份id | int(11)
+	*/
+	public final TableField<Integer> provinceId = new TableFieldImpl<Integer>(this,"province_id","provinceId","省份id");
+
+	/**
+	 *城市id | int(11)
+	*/
+	public final TableField<Integer> cityId = new TableFieldImpl<Integer>(this,"city_id","cityId","城市id");
+
+	/**
+	 *业务员名称 | varchar(255)
+	*/
+	public final TableField<String> salesman = new TableFieldImpl<String>(this,"salesman","salesman","业务员名称");
+
+	/**
+	 *策略id | int(11)
+	*/
+	public final TableField<Integer> tackId = new TableFieldImpl<Integer>(this,"tack_id","tackId","策略id");
+
+	/**
+	 *所属集团 | varchar(255)
+	*/
+	public final TableField<String> belongTo = new TableFieldImpl<String>(this,"belong_to","belongTo","所属集团");
+
+	/**
+	 *车架号长度 | int(11)
+	*/
+	public final TableField<Integer> carFrameLen = new TableFieldImpl<Integer>(this,"car_frame_len","carFrameLen","车架号长度");
+
+	/**
+	 *发动机号长度 | int(11)
+	*/
+	public final TableField<Integer> carEngineLen = new TableFieldImpl<Integer>(this,"car_engine_len","carEngineLen","发动机号长度");
+
+	/**
+	 *车辆拥有者姓名长度 | int(11)
+	*/
+	public final TableField<Integer> ownerNameLen = new TableFieldImpl<Integer>(this,"owner_name_len","ownerNameLen","车辆拥有者姓名长度");
+
+	/**
+	 *车辆登记证书长度 | int(11)
+	*/
+	public final TableField<Integer> carCertificateLen = new TableFieldImpl<Integer>(this,"car_certificate_len","carCertificateLen","车辆登记证书长度");
+
+	/**
+	 *是否删除(1为删除) | tinyint(4)
+	*/
+	public final TableField<Boolean> isDelete = new TableFieldImpl<Boolean>(this,"is_delete","isDelete","是否删除(1为删除)");
+
+	/**
+	 *更新时间 | datetime
+	*/
+	public final DateTableField<Date> updateTime = new DateTableFieldImpl<Date>(this,"update_time","updateTime","更新时间");
+
+	/**
+	 *创建时间 | datetime
+	*/
+	public final DateTableField<Date> createTime = new DateTableFieldImpl<Date>(this,"create_time","createTime","创建时间");
+
+
+	private final TableField<?>[] allFields = new TableField<?>[] {id,code,name,address,contacts,tel,appKey,expiredTime,status,joinTime,queryType,maxCarCounts,leftCarCounts,maxQueryCounts,leftQueryCounts,provinceId,cityId,salesman,tackId,belongTo,carFrameLen,carEngineLen,ownerNameLen,carCertificateLen,isDelete,updateTime,createTime};
+
+	@Override
+	public TableField<?>[] getAllFields() {
+		return allFields;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public TableField<?> getPK() {
+		return pk;
+	}
+
+	@Override
+	public final boolean isAutoGeneratedPK() {
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "TOrgInfo[table=org_info]";
+	}
+
+}

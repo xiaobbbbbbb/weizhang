@@ -1,0 +1,237 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.ecarinfo.traffic</groupId>
+		<artifactId>ec-traffic</artifactId>
+		<version>0.0.1</version>
+	</parent>
+	<artifactId>ec-traffic-api</artifactId>
+	<name>ec-traffic-api</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+	<!-- 解决m2e插件maven-dependency-plugin问题 http://blog.csdn.net/smst1987/article/details/6871495 -->
+	<build>
+		<!-- 指定生成jar包的名称 -->
+		<finalName>TrafficApi</finalName>
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+		<!-- <outputDirectory>${basedir}/bin/classes</outputDirectory> -->
+
+		<!-- 可以配置多个源文件目录 参看:http://gaolixu.iteye.com/blog/571216 http://www.cnblogs.com/discuss/articles/1866927.html -->
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<!-- 过滤文件 -->
+				<excludes>
+					<exclude>**/log4j.properties</exclude>
+					<exclude>**/server.properties</exclude>
+					<exclude>**/boot.cfg</exclude>
+				</excludes>
+			</resource>
+		</resources>
+
+
+
+		<!-- 解决<execution>报错的问题 http://blog.csdn.net/smst1987/article/details/6871495 -->
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[2.0,)</versionRange>
+										<goals>
+											<goal>copy-dependencies</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<!-- 生成javadoc -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.7</version> <executions> <execution> <id>attach-javadocs</id> 
+				<goals> <goal>jar</goal> </goals> </execution> </executions> </plugin> -->
+			<!-- 编译插件用来编译你的工程源码。 默认编译器是javac，用来编译java源代码。 默认的source设置为1.5,默认的target设定为1.5。如果你想改变这些默认值，你应该设置source和target: 
+				Goals Overview(目标概述)编译器插件有两个目标。两者都已经绑定到其适当阶段。在maven生命周期内，在各自的阶段自动执行。 compiler:compile 
+				绑定到阶段，主要用于编译源文件。 compiler:testCompile 绑定到测试编译阶段，用于编译测试源文件。 设置java编译器的-source和-target: 
+				默认的source设置为1.5,默认的target设定为1.5。如果你想改变这些默认值，你应该设置source和target。(1.5表示JDK版本) -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- 打包的同时将依赖的包文件对应复制过去 复制到target/lib目录下面 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependenices</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/lib</outputDirectory>
+							<excludeTransitive>false</excludeTransitive>
+							<stripVersion>false</stripVersion><!-- 复制包后加上包的版本号码 -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- 拷贝资源文件 http://maven.apache.org/plugins/maven-resources-plugin/examples/copy-resources.html -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>copy-html</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/html</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/html</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-logs</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/logs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/log</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-docs</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/docs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/docs</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-resource</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/resource</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/resource</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.ecarinfo.netty.server</groupId>
+			<artifactId>ec-nettyServer</artifactId>
+		</dependency>
+		<dependency> 
+			<groupId>com.ecarinfo.traffic</groupId>
+			<artifactId>ec-traffic-persist</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.ecarinfo.traffic</groupId>
+			<artifactId>ec-traffic-protocol</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		
+		<!-- mokito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
